@@ -164,16 +164,19 @@ myReverse' = undefined
 
 myConcat :: [Int] -> [Int] -> [Int]
 myConcat ([x]) ys  = x:ys
-myConcat (x:xs) ys = (myConcat xs (x:ys))
+myConcat xs ys = (myConcat (init xs) ((myLast xs) :ys))
 
 myAnd :: [Bool] -> Bool
-myAnd = undefined
+myAnd ([x])  = x
+myAnd (x:xs)  = x && (myAnd xs)
 
 myOr ::  [Bool] -> Bool
-myOr = undefined
+myOr ([x])  = x
+myOr (x:xs)  = x || (myOr xs)
 
 myProduct :: [Int] -> Int
-myProduct = undefined
+myProduct ([x])  = x
+myProduct (x:xs)  = x * (myProduct xs)
 
 -- pas d'element neutre pour max et min 
 
