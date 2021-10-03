@@ -181,10 +181,14 @@ myProduct (x:xs)  = x * (myProduct xs)
 -- pas d'element neutre pour max et min 
 
 myTake :: Int -> [Int] -> [Int]
-myTake = undefined
+myTake i [] = []
+myTake 0 xs = []
+myTake i (x:xs) = x:(myTake (i-1) xs)
 
 myDrop :: Int -> [Int] -> [Int]
-myDrop = undefined
+myDrop i [] = []
+myDrop 0 xs = xs
+myDrop i (x:xs) = (myDrop (i-1) xs)
 
 -- cette fonction existe sous le nom !!
 myBangBang :: [Int] -> Int -> Int
@@ -192,7 +196,14 @@ myBangBang = undefined
 
 -- liste deja triee
 myInsert :: Int -> [Int] -> [Int]
-myInsert = undefined
+myInsert i [] = [i]
+myInsert i (x:xs) | i<x = [i,x]++xs  
+                  | i==x = [x]++(myInsert i xs)
+                  | otherwise = [x]++(myInsert i xs)
 
 mySort :: [Int] -> [Int]
-mySort = undefined
+mySort [] = [] --si liste vide alors liste déjà triée
+mySort (x:xs) = myInsert x (mySort xs) --sinon j'insère x dans le reste de la liste une fois triée
+  where myInsert x [] = [x] -- si reste liste singleton alors déjà triée
+        myInsert x (y:ys) | (x<=y)    = x:y:ys -- cas où x < le 1er élément de la liste déjà triée
+                          | otherwise = y:(myInsert x ys) -- sinon j'insère x qqpart après le 1er élément
